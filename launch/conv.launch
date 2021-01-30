@@ -1,0 +1,9 @@
+<launch>
+        <node pkg="point_cloud_converter" name="point_cloud_converter" type="point_cloud_converter_node" >
+                <!--<remap from="points_in" to="/camera/depth/color/points"/>
+                <remap from="points2_out" to="convert_points" />-->
+
+                <remap from="points2_in" to="/camera/depth/color/points"/>
+                <remap from="points_out" to="/point_cloud_converter/convert_points" />
+        </node>
+</launch>
