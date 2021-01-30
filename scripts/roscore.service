@@ -1,0 +1,20 @@
+[Unit]
+Description=roscore
+After=network.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/odroid
+
+User=odroid
+Group=odroid
+
+#Restart=always
+
+ExecStart=/bin/bash .scripts/roscore_systemd.sh start
+RemainAfterExit=true
+ExecStop=/bin/bash .scripts/roscore_systemd.sh stop
+
+
+[Install]
+WantedBy=multi-user.target
