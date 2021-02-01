@@ -7,11 +7,13 @@
   <arg name="imu_ignore_acc"          default="true" />
   <arg name="imu_remove_gravitational_acceleration" default="true" />
   <arg name="mapping_active" default="true"/>
+  <arg name="database_file" default="rtabmap"/>
 
   <!-- Localization-only mode -->
   <arg name="localization"      default="false"/>
   <arg     if="$(arg localization)" name="rtabmap_args"  default=""/>
-  <arg unless="$(arg localization)" name="rtabmap_args"  default="--delete_db_on_start"/>  
+  <!--<arg unless="$(arg localization)" name="rtabmap_args"  default="--delete_db_on_start"/> -->
+  <arg unless="$(arg localization)" name="rtabmap_args"  default=""/>
 
   <?ignore <group ns="rtabmap_vo">
     <!-- Visual Odometry -->
@@ -68,6 +70,8 @@
       <param     if="$(arg localization)" name="Mem/IncrementalMemory" type="string" value="false"/>
       <param unless="$(arg localization)" name="Mem/IncrementalMemory" type="string" value="true"/>
       <param name="wait_for_transform_duration" type="double" value="0.3"/>
+
+      <param name="database_path"        type="string" value="~/.ros/$(arg database_file).db"/>
       
     </node>
   </group>
