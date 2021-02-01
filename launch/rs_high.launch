@@ -30,7 +30,7 @@
       <arg name="enable_accel"            value="true"/>
       <arg name="initial_reset"           value="true"/>
       <!--<arg name="/camera/motion_module/global_time_enabled" value="false"/>-->
-      <arg name="json_file_path"          value="$(find lprobsth)/cfg/LowResHighAccuracyPreset.json"/>
+      <arg name="json_file_path"          value="$(find lprobsth_ros)/cfg/LowResHighAccuracyPreset.json"/>
       <param name="power_line_frequency" type="string" value="2"/>
     </include>
     

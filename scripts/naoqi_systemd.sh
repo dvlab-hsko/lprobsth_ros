@@ -14,7 +14,7 @@ if [[ $1 == "start" ]]; then
   echo "INFO: sourcing home file"
   screen -S naoqi -p 0 -X stuff "source /home/odroid/.bashrc^M"
   echo "INFO: starting naoqi_driver ROS node"
-  screen -S naoqi -p 0 -X stuff "roslaunch lprobsth naoqi_odom.launch^M"
+  screen -S naoqi -p 0 -X stuff "roslaunch lprobsth_ros naoqi_odom.launch^M"
   exit 0
 fi
 

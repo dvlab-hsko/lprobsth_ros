@@ -41,7 +41,7 @@
   <group ns="rtabmap_map">   
         <!-- SLAM -->
     <node if="$(arg mapping_active)" name="rtabmap" pkg="rtabmap_ros" type="rtabmap" output="screen" args="$(arg rtabmap_args)">
-      <rosparam command="load" file="$(find lprobsth)/launch/rtabmap.yaml"/>
+      <rosparam command="load" file="$(find lprobsth_ros)/launch/rtabmap.yaml"/>
 
       <param name="frame_id"        type="string" value="$(arg frame_id)"/>
  
