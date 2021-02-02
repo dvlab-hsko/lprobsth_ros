@@ -1,0 +1,47 @@
+<launch>
+  <rosparam> /camera/motion_module/global_time_enabled: false </rosparam>
+  <rosparam> /camera/stereo_module/laser_power: 20.0 </rosparam>
+  <rosparam> /camera/stereo_module/auto_exposure_roi/left: 85 </rosparam>
+  <rosparam> /camera/stereo_module/auto_exposure_roi/right: 405 </rosparam>
+  <rosparam> /camera/stereo_module/auto_exposure_roi/top: 50 </rosparam>
+  <rosparam> /camera/stereo_module/auto_exposure_roi/bottom: 230 </rosparam>
+    
+    <include file="$(find realsense2_camera)/launch/rs_camera.launch">
+      <!--<arg name="filters"                 value="pointcloud"/>-->
+      <arg name="enable_pointcloud" value="true"/>
+      <arg name="depth_width"             value="1280"/>
+      <arg name="depth_height"            value="720"/>
+      <arg name="enable_depth"            value="true"/>
+      <arg name="depth_fps"               value="5"/>
+
+      <arg name="color_width"             value="640"/>
+      <arg name="color_height"            value="480"/>
+      <arg name="enable_color"            value="true"/>
+      <arg name="color_fps"               value="5"/>
+      
+      <arg name="accel_fps"               value="63"/>
+      <arg name="gyro_fps"                value="200"/>
+      <arg name="align_depth"             value="true"/>
+      <arg name="enable_sync"             value="true"/>
+      <arg name="unite_imu_method"        value="copy"/>
+      <!--<arg name="unite_imu_method"        value="linear_interpolation"/>-->
+      <arg name="clip_distance"           value="-2"/>
+      <arg name="enable_gyro"             value="true"/>
+      <arg name="enable_accel"            value="true"/>
+      <arg name="initial_reset"           value="true"/>
+      <!--<arg name="/camera/motion_module/global_time_enabled" value="false"/>-->
+      <arg name="json_file_path"          value="$(find lprobsth_ros)/cfg/LowResHighAccuracyPreset.json"/>
+      <param name="power_line_frequency" type="string" value="2"/>
+    </include>
+    
+    <?ignore <node pkg="imu_filter_madgwick" type="imu_filter_node" name="imu_filter" output="screen"> 
+      <param name="use_mag"                value="false"/>
+      <param name="publish_tf"             value="false"/>
+      <param name="world_frame"            value="enu"/>
+      <remap from="/imu/data_raw"          to="/camera/imu"/>
+      <remap from="/imu/data"              to="/camera/imu_filtered"/>
+    </node> ?>
+
+  <node pkg="tf" type="static_transform_publisher" name="realsense_relocate" args="0.065 0 0.11  0 0.03 0 Head camera_link 50"/>
+</launch>
+
