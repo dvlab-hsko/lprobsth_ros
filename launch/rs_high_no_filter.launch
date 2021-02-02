@@ -1,10 +1,12 @@
 <launch>
   <rosparam> /camera/motion_module/global_time_enabled: false </rosparam>
+  <rosparam> /camera/stereo_module/enable_auto_exposure: false </rosparam>
+  <rosparam> /camera/stereo_module/exposure: 8000 </rosparam>
   <rosparam> /camera/stereo_module/laser_power: 20.0 </rosparam>
-  <rosparam> /camera/stereo_module/auto_exposure_roi/left: 85 </rosparam>
+  <?ignore <rosparam> /camera/stereo_module/auto_exposure_roi/left: 85 </rosparam>
   <rosparam> /camera/stereo_module/auto_exposure_roi/right: 405 </rosparam>
   <rosparam> /camera/stereo_module/auto_exposure_roi/top: 50 </rosparam>
-  <rosparam> /camera/stereo_module/auto_exposure_roi/bottom: 230 </rosparam>
+  <rosparam> /camera/stereo_module/auto_exposure_roi/bottom: 230 </rosparam> ?>
     
     <include file="$(find realsense2_camera)/launch/rs_camera.launch">
       <!--<arg name="filters"                 value="pointcloud"/>-->
