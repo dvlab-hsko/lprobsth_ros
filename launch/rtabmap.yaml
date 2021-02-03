@@ -1,17 +1,23 @@
 Rtabmap:
-  DetectionRate: 1.0
+  DetectionRate: 15.0
+RGBD:
+  LinearUpdate: 0.0
+  LinearSpeedUpdate: 0.2
+  AngularUpdate: 0.0
+  AngularSpeedUpdate: 0.2
+  #NeighborLinkRefining: true
 
 Grid:
-  #Grid/FootprintHeight: 0.57                        # [Footprint height used to filter points over the footprint of the robot. Footprint length and width should be set.]
-  #Grid/FootprintLength: 0.25                        # [Footprint length used to filter points over the footprint of the robot.]
-  #Grid/FootprintWidth: 0.31                         # [Footprint width used to filter points over the footprint of the robot. Footprint length should be set.]
+  Grid/FootprintHeight: 0.57                        # [Footprint height used to filter points over the footprint of the robot. Footprint length and width should be set.]
+  Grid/FootprintLength: 0.25                        # [Footprint length used to filter points over the footprint of the robot.]
+  Grid/FootprintWidth: 0.31                         # [Footprint width used to filter points over the footprint of the robot. Footprint length should be set.]
   FlatObstacleDetected:   true
-  MinGroundHeight:        -0.05
-  MaxGroundHeight:        0.1
-  MaxObstacleHeight:      1.2  
+  MinGroundHeight:        -0.10
+  MaxGroundHeight:        0.20
+  MaxObstacleHeight:      1.00
   #RangeMax:               4.0
   #RangeMin:               0.35
 
 GridGlobal:
-  #FootprintRadius:        0.25
-  OccupancyThr:           0.65
+  FootprintRadius:        0.25
+  OccupancyThr:           0.70
