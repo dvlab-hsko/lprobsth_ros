@@ -44,6 +44,6 @@
       <remap from="/imu/data"              to="/camera/imu_filtered"/>
     </node> ?>
 
-  <node pkg="tf" type="static_transform_publisher" name="realsense_relocate" args="0.065 0 0.11  0 0.03 0 Head camera_link 50"/>
+  <node pkg="tf" type="static_transform_publisher" name="realsense_relocate" args="0.065 0 0.11  0 0.03 0 Head camera_link 20"/>
 </launch>
 

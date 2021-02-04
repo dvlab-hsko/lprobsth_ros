@@ -1,6 +1,6 @@
 <launch>
     <include file="$(find naoqi_driver)/launch/naoqi_driver.launch">
-      <arg name="nao_ip"           value="10.42.0.57"/>
+      <arg name="nao_ip"           value="10.42.0.56"/>
       <arg name="network_interface" value="wlan0"/>
       <arg name="roscore_ip"       value="192.168.125.29"/>
 

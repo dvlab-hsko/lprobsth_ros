@@ -1,0 +1,18 @@
+Rtabmap:
+  DetectionRate: 10.0
+
+Grid:
+  Grid/FootprintHeight: 0.57                        # [Footprint height used to filter points over the footprint of the robot. Footprint length and width should be set.]
+  Grid/FootprintLength: 0.25                        # [Footprint length used to filter points over the footprint of the robot.]
+  Grid/FootprintWidth: 0.31                         # [Footprint width used to filter points over the footprint of the robot. Footprint length should be set.]
+  FlatObstacleDetected:   true
+  MinGroundHeight:        -0.05
+  MaxGroundHeight:        0.1
+  MaxObstacleHeight:      0.8  
+  RangeMax:               4.0
+  RangeMin:               0.35
+
+GridGlobal:
+  #FootprintRadius:        0.25
+  OccupancyThr:           0.50
+
