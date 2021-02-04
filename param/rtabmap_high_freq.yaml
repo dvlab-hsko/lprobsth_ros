@@ -20,4 +20,4 @@ Grid:
 
 GridGlobal:
   FootprintRadius:        0.25
-  OccupancyThr:           0.70
+  OccupancyThr:           0.50
