@@ -1,10 +1,10 @@
 Rtabmap:
-  DetectionRate: 15.0
+  DetectionRate: 7.5
 RGBD:
   LinearUpdate: 0.0
-  LinearSpeedUpdate: 0.2
+  LinearSpeedUpdate: 0.1
   AngularUpdate: 0.0
-  AngularSpeedUpdate: 0.2
+  AngularSpeedUpdate: 0.1
   #NeighborLinkRefining: true
 
 Grid:
