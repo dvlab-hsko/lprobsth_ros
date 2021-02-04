@@ -3,7 +3,7 @@
   <arg name="rgb_topic"               default="/camera/color/image_raw" />
   <arg name="depth_topic"             default="/camera/aligned_depth_to_color/image_raw" />
   <arg name="camera_info_topic"       default="/camera/color/camera_info" />
-  <arg name="imu_topic"               default="/camera/imu_filtered" />
+  <arg name="imu_topic"               default="/camera/imu" />
   <arg name="imu_ignore_acc"          default="true" />
   <arg name="imu_remove_gravitational_acceleration" default="true" />
   <arg name="mapping_active" default="true"/>
@@ -43,7 +43,7 @@
   <group ns="rtabmap_map">   
         <!-- SLAM -->
     <node if="$(arg mapping_active)" name="rtabmap" pkg="rtabmap_ros" type="rtabmap" output="screen" args="$(arg rtabmap_args)">
-      <rosparam command="load" file="$(find lprobsth_ros)/launch/rtabmap.yaml"/>
+      <rosparam command="load" file="$(find lprobsth_ros)/param/rtabmap_high_freq.yaml"/>
 
       <param name="frame_id"        type="string" value="$(arg frame_id)"/>
  
@@ -99,17 +99,17 @@
 
 
       <!-- The order of the values is x, y, z, roll, pitch, yaw, vx, vy, vz, vroll, vpitch, vyaw, ax, ay, az. -->
-      <rosparam param="odom0_config">[true, true, false,
-                                      false, false, true,
+      <rosparam param="odom0_config">[false, false, false,
                                       false, false, false,
+                                      true, true, false,
                                       false, false, false,
                                       false, false, false]</rosparam>
 
       <rosparam     if="$(arg imu_ignore_acc)" param="imu0_config">[
                                      false, false, false,
-                                     false, false, true,
                                      false, false, false,
-                                     false,  false,  false,
+                                     false, false, false,
+                                     false,  false,  true,
                                      false,  false,  false] </rosparam>
       <rosparam unless="$(arg imu_ignore_acc)" param="imu0_config">[
                                      false, false, false,
@@ -277,7 +277,7 @@
 
   </node> ?>
     
-  <!--<node pkg="nodelet" type="nodelet" name="data_odom_sync" args="load rtabmap_ros/data_odom_sync standalone_nodelet">
+  <!-- <node pkg="nodelet" type="nodelet" name="data_odom_sync" args="load rtabmap_ros/data_odom_sync standalone_nodelet">
     <remap from="rgb/image_in"       to="$(arg rgb_topic)"/>
     <remap from="depth/image_in"     to="$(arg depth_topic)"/>
     <remap from="rgb/camera_info_in" to="$(arg camera_info_topic)"/>
