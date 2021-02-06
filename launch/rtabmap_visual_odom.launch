@@ -16,6 +16,7 @@
   <!-- Visual Odometry -->
   <group ns="rtabmap_vo">
     <node pkg="rtabmap_ros" type="rgbd_odometry" name="visual_odometry" output="screen" args="$(arg rtabmap_args)">
+      <param name="Reg/Force3DoF"    value="true" />
       <remap from="rgb/image"       to="$(arg rgb_topic)"/>
       <remap from="depth/image"     to="$(arg depth_topic)"/>
       <remap from="rgb/camera_info" to="$(arg camera_info_topic)"/>
@@ -29,10 +30,11 @@
 
       <param name="Odom/FillInfoData"      type="string" value="true"/>
       <param name="Odom/ResetCountdown"    type="string" value="1"/>
-      <!--<param name="Vis/FeatureType"        type="string" value="6"/> -->
-      <param name="OdomF2M/MaxSize"        type="string" value="1000"/>
-      <param name="wait_for_transform_duration" type="double" value="0.3"/>
+      <param name="OdomF2M/MaxSize"        type="string" value="1500"/>
+      <param name="wait_for_transform_duration" type="double" value="0.2"/>
       <param name="Odom/Strategy" value="0"/>
+      <param name="Vis/FeatureType" value="0"/>
+      <param name="tf_delay" value="0.05"/>
     </node>
   </group> ?>
 
@@ -51,20 +53,23 @@
       
       <param name="publish_tf" value="true"/>
       <param name="rgbd_sync" type="bool" value="true"/>
-      <param name="approx_rgbd_sync" type="bool" value="false"/>
+      <param name="approx_rgbd_sync" type="bool" value="true"/>
       <param name="Kp/DetectorStrategy"    type="string" value="0"/> <!-- use same features as odom -->
+      <param name="Optimizer/Strategy" value="0"/>      
+      <param name="Vis/FeatureType" value="0"/>
       
       <param name="Grid/FromDepth"             type="bool" value="true"/>
-      <param name="Grid/RayTracing" type="bool" value="true"/>
+      <param name="Grid/RayTracing" type="bool" value="false"/>
 
       <!-- localization mode -->
       <param name="Mem/InitWMWithAllNodes" type="string" value="$(arg localization)"/> 
       <param     if="$(arg localization)" name="Mem/IncrementalMemory" type="string" value="false"/>
       <param unless="$(arg localization)" name="Mem/IncrementalMemory" type="string" value="true"/>
-      <param name="wait_for_transform_duration" type="double" value="0.3"/>
+      <param name="wait_for_transform_duration" type="double" value="0.2"/>
 
       <param name="database_path"        type="string" value="~/.ros/$(arg database_file).db"/>
-      
+      <!-- <param name="Reg/Force3DoF"    value="true" /> -->
+      <param name="Optimizer/Slam2D" value="true" />
     </node>
   </group>
 </launch>
