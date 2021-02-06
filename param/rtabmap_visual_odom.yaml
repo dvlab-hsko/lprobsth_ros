@@ -1,9 +1,9 @@
 Rtabmap:
   DetectionRate: 1.0
 RGBD:
-  LinearUpdate: 0.0
+  LinearUpdate: 0.1
   LinearSpeedUpdate: 0.2
-  AngularUpdate: 0.0
+  AngularUpdate: 0.1
   AngularSpeedUpdate: 0.2
 
 Grid:
