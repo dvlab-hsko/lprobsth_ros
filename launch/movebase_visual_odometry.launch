@@ -1,0 +1,16 @@
+<launch>
+  <!-- Arguments -->
+  <arg name="cmd_vel_topic" default="/cmd_vel" />
+  <arg name="odom_topic" default="/vo" />
+  <arg name="move_forward_only" default="false"/>
+
+  <!-- move_base -->
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find lprobsth_ros)/param/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find lprobsth_ros)/param/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find lprobsth_ros)/param/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find lprobsth_ros)/param/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find lprobsth_ros)/param/move_base_params.yaml" command="load" />
+    <rosparam file="$(find lprobsth_ros)/param/dwa_local_planner_params.yaml" command="load" />
+  </node>
+</launch>
