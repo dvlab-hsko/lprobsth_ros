@@ -1,5 +1,5 @@
 Rtabmap:
-  DetectionRate: 7.5
+  DetectionRate: 5
 RGBD:
   LinearUpdate: 0.0
   LinearSpeedUpdate: 0.1
