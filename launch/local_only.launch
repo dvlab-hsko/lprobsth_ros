@@ -14,7 +14,7 @@
       
       <remap from="odometry/filtered" to="odometry/filtered_local"/>
       
-      <param name="frequency" value="40"/>
+      <param name="frequency" value="80"/>
       <param name="sensor_timeout" value="0.05"/>
       <param name="two_d_mode" value="true"/>
 
@@ -25,7 +25,7 @@
 
       <param name="transform_time_offset" value="0.0"/>
 
-      <param name="predict_to_current_time" value="false"/>
+      <param name="predict_to_current_time" value="true"/>
 
       <param name="odom0" value="/naoqi_driver/odom"/>
       <!-- <param name="imu0" value="/naoqi_driver/imu/torso"/> -->
@@ -43,7 +43,7 @@
                                      false, false, false,
                                      false, false, true,
                                      false, false, false,
-                                     false,  false,  true,
+                                     false,  false,  false,
                                      false,  false,  false] </rosparam>
       <rosparam unless="$(arg imu_ignore_acc)" param="imu0_config">[
                                     false, false, false,
@@ -68,17 +68,17 @@
       <!-- ======== ADVANCED PARAMETERS ======== -->
       <param name="odom0_queue_size" value="5"/>
       <param name="odom1_queue_size" value="5"/>
-      <param name="imu0_queue_size" value="5"/>
+      <param name="imu0_queue_size" value="1"/>
 
       <rosparam param="process_noise_covariance">[
-                                                  0.05, 0,    0,    0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
-                                                   0,    0.05, 0,    0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
+                                                  0, 0,    0,    0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
+                                                   0,    0, 0,    0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
                                                    0,    0,    0.06, 0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
                                                    0,    0,    0,    0.03, 0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
                                                    0,    0,    0,    0,    0.03, 0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
                                                    0,    0,    0,    0,    0,    0.25, 0,     0,     0,    0,    0,    0,    0,    0,    0,
-                                                   0,    0,    0,    0,    0,    0,    0.06, 0,     0,    0,    0,    0,    0,    0,    0,
-                                                   0,    0,    0,    0,    0,    0,    0,     0.06, 0,    0,    0,    0,    0,    0,    0,
+                                                   0,    0,    0,    0,    0,    0,    0.05, 0,     0,    0,    0,    0,    0,    0,    0,
+                                                   0,    0,    0,    0,    0,    0,    0,     0.05, 0,    0,    0,    0,    0,    0,    0,
                                                    0,    0,    0,    0,    0,    0,    0,     0,     0.04, 0,    0,    0,    0,    0,    0,
                                                    0,    0,    0,    0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
                                                    0,    0,    0,    0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
