@@ -1,7 +1,9 @@
 <launch>
   <rosparam> /camera/motion_module/global_time_enabled: false </rosparam>
+  <rosparam> /camera/stereo_module/global_time_enabled: false </rosparam>
+  <rosparam> /camera/rgb_camera/global_time_enabled: false </rosparam>
   <rosparam> /camera/stereo_module/enable_auto_exposure: false </rosparam>
-  <rosparam> /camera/stereo_module/exposure: 2000 </rosparam>
+  <rosparam> /camera/stereo_module/exposure: 8000 </rosparam>
   <rosparam> /camera/stereo_module/laser_power: 20.0 </rosparam>
     
     <include file="$(find realsense2_camera)/launch/rs_camera.launch">
