@@ -12,12 +12,12 @@
       <arg name="depth_width"             value="640"/>
       <arg name="depth_height"            value="480"/>
       <arg name="enable_depth"            value="true"/>
-      <arg name="depth_fps"               value="15"/>
+      <arg name="depth_fps"               value="5"/>
 
       <arg name="color_width"             value="640"/>
       <arg name="color_height"            value="480"/>
       <arg name="enable_color"            value="true"/>
-      <arg name="color_fps"               value="15"/>
+      <arg name="color_fps"               value="5"/>
       
       <arg name="accel_fps"               value="63"/>
       <arg name="gyro_fps"                value="400"/>
@@ -37,8 +37,7 @@
       <param name="world_frame"            value="enu"/>
       <remap from="/imu/data_raw"          to="/camera/imu"/>
       <remap from="/imu/data"              to="/camera/imu_filtered"/>
-      <param name="gain" value="2.0"/>
-      <param name="zeta" value="-0.011"/>
+      <param name="gain" value="0.2"/>
       <param name="stateless" value="false"/>
     </node>
 
