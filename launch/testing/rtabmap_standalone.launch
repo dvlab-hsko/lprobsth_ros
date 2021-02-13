@@ -3,9 +3,6 @@
   <arg name="rgb_topic"               default="/camera/color/image_raw" />
   <arg name="depth_topic"             default="/camera/aligned_depth_to_color/image_raw" />
   <arg name="camera_info_topic"       default="/camera/color/camera_info" />
-  <arg name="imu_topic"               default="/camera/imu_filtered" />
-  <arg name="imu_ignore_acc"          default="true" />
-  <arg name="imu_remove_gravitational_acceleration" default="false" />
   <arg name="mapping_active" default="true"/>
   <arg name="database_file" default="rtabmap"/>
 
