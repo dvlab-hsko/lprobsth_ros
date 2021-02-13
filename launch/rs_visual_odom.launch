@@ -30,14 +30,17 @@
       <arg name="json_file_path"          value="$(find lprobsth_ros)/cfg/LowResHighAccuracyPreset.json"/>
       <param name="power_line_frequency" type="string" value="2"/>
     </include>
-    
-    <?ignore <node pkg="imu_filter_madgwick" type="imu_filter_node" name="imu_filter" output="screen"> 
+
+
+    <node pkg="imu_filter_madgwick" type="imu_filter_node" name="imu_filter" output="screen">
       <param name="use_mag"                value="false"/>
       <param name="publish_tf"             value="false"/>
       <param name="world_frame"            value="enu"/>
       <remap from="/imu/data_raw"          to="/camera/imu"/>
       <remap from="/imu/data"              to="/camera/imu_filtered"/>
-    </node> ?>
+      <param name="gain" value="0.2"/>
+      <param name="stateless" value="false"/>
+    </node>
 
   <node pkg="tf" type="static_transform_publisher" name="realsense_relocate" args="0.065 0 0.11  0 0.03 0 Head camera_link 50"/>
 </launch>
