@@ -1,34 +1,4 @@
 <launch>
-  <rosparam> /camera/motion_module/global_time_enabled: false </rosparam>
-  <rosparam> /camera/stereo_module/enable_auto_exposure: false </rosparam>
-  <rosparam> /camera/stereo_module/exposure: 2000 </rosparam>
-  <rosparam> /camera/stereo_module/laser_power: 20.0 </rosparam>
-    
-    <include file="$(find realsense2_camera)/launch/rs_camera.launch">
-      <!--<arg name="filters"                 value="pointcloud"/>-->
-      <arg name="enable_pointcloud" value="true"/>
-      <arg name="depth_width"             value="640"/>
-      <arg name="depth_height"            value="480"/>
-      <arg name="enable_depth"            value="true"/>
-      <arg name="depth_fps"               value="15"/>
-
-      <arg name="color_width"             value="640"/>
-      <arg name="color_height"            value="480"/>
-      <arg name="enable_color"            value="true"/>
-      <arg name="color_fps"               value="15"/>
-      
-      <arg name="accel_fps"               value="63"/>
-      <arg name="gyro_fps"                value="400"/>
-      <arg name="align_depth"             value="true"/>
-      <arg name="enable_sync"             value="true"/>
-      <arg name="unite_imu_method"        value="copy"/>
-      <arg name="clip_distance"           value="10"/>
-      <arg name="enable_gyro"             value="true"/>
-      <arg name="enable_accel"            value="true"/>
-      <arg name="initial_reset"           value="true"/>
-      <arg name="json_file_path"          value="$(find lprobsth_ros)/cfg/LowResHighAccuracyPreset.json"/>
-    </include>
-
     <node pkg="imu_filter_madgwick" type="imu_filter_node" name="imu_filter" output="screen">
       <param name="use_mag"                value="false"/>
       <param name="publish_tf"             value="true"/>
