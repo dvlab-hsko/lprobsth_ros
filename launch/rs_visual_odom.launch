@@ -1,5 +1,7 @@
 <launch>
   <rosparam> /camera/motion_module/global_time_enabled: false </rosparam>
+  <rosparam> /camera/stereo_module/global_time_enabled: false </rosparam>
+  <rosparam> /camera/rgb_camera/global_time_enabled: false </rosparam>
   <rosparam> /camera/stereo_module/enable_auto_exposure: false </rosparam>
   <rosparam> /camera/stereo_module/exposure: 2000 </rosparam>
   <rosparam> /camera/stereo_module/laser_power: 20.0 </rosparam>
@@ -26,11 +28,8 @@
       <arg name="enable_gyro"             value="true"/>
       <arg name="enable_accel"            value="true"/>
       <arg name="initial_reset"           value="true"/>
-      <!--<arg name="/camera/motion_module/global_time_enabled" value="false"/>-->
       <arg name="json_file_path"          value="$(find lprobsth_ros)/cfg/LowResHighAccuracyPreset.json"/>
-      <param name="power_line_frequency" type="string" value="2"/>
     </include>
-
 
     <node pkg="imu_filter_madgwick" type="imu_filter_node" name="imu_filter" output="screen">
       <param name="use_mag"                value="false"/>
@@ -42,6 +41,6 @@
       <param name="stateless" value="false"/>
     </node>
 
-  <node pkg="tf" type="static_transform_publisher" name="realsense_relocate" args="0.065 0 0.11  0 0.03 0 Head camera_link 50"/>
+  <node pkg="tf" type="static_transform_publisher" name="realsense_relocate" args="0.0745 0.0475 0.10  0.0 0.05 0.02 Head camera_link 20"/>
 </launch>
 
