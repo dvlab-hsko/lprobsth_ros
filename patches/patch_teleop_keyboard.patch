@@ -1,0 +1,29 @@
+--- teleop_twist_keyboard_orig.py	2021-02-15 10:22:19.606237884 +0100
++++ teleop_twist_keyboard.py	2021-02-02 19:42:34.468547286 +0100
+@@ -8,6 +8,7 @@
+ import rospy
+ 
+ from geometry_msgs.msg import Twist
++from std_msgs.msg import Float32
+ 
+ import sys, select, termios, tty
+ 
+@@ -162,6 +163,9 @@
+     return "currently:\tspeed %s\tturn %s " % (speed,turn)
+ 
+ if __name__=="__main__":
++    turnpublisher = rospy.Publisher('/naoqi_driver/turnhead', Float32, queue_size = 1)
++
++
+     settings = termios.tcgetattr(sys.stdin)
+ 
+     rospy.init_node('teleop_twist_keyboard')
+@@ -213,6 +217,8 @@
+                 th = 0
+                 if (key == '\x03'):
+                     break
++                if (key == ' '):
++                    turnpublisher.publish(0.5)
+  
+             pub_thread.update(x, y, z, th, speed, turn)
+ 

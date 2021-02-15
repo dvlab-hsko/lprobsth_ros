@@ -1,0 +1,126 @@
+diff -uarN naoqi_driver/src/converters/joint_state.cpp naoqi_driver_dvlab/src/converters/joint_state.cpp
+--- naoqi_driver/src/converters/joint_state.cpp	2021-02-13 13:51:20.428313943 +0100
++++ naoqi_driver_dvlab/src/converters/joint_state.cpp	2021-02-13 14:02:51.812022858 +0100
+@@ -163,7 +163,8 @@
+   const ros::Time& odom_stamp = ros::Time::now();
+   const float& odomX  =  al_odometry_data[0];
+   const float& odomY  =  al_odometry_data[1];
+-  const float& odomZ  =  al_odometry_data[2];
++  //const float& odomZ  =  al_odometry_data[2];
++  const float& odomZ = 0.0f;
+   const float& odomWX =  al_odometry_data[3];
+   const float& odomWY =  al_odometry_data[4];
+   const float& odomWZ =  al_odometry_data[5];
+@@ -174,7 +175,7 @@
+ 
+   static geometry_msgs::TransformStamped msg_tf_odom;
+   msg_tf_odom.header.frame_id = "odom";
+-  msg_tf_odom.child_frame_id = "base_link";
++  msg_tf_odom.child_frame_id = "base_footprint";
+   msg_tf_odom.header.stamp = odom_stamp;
+ 
+   msg_tf_odom.transform.translation.x = odomX;
+@@ -182,12 +183,12 @@
+   msg_tf_odom.transform.translation.z = odomZ;
+   msg_tf_odom.transform.rotation = odom_quat;
+ 
+-  tf_transforms_.push_back( msg_tf_odom );
++  //tf_transforms_.push_back( msg_tf_odom );
+   tf2_buffer_->setTransform( msg_tf_odom, "naoqiconverter", false);
+ 
+   if (robot_ == robot::NAO )
+   {
+-    nao::addBaseFootprint( tf2_buffer_, tf_transforms_, odom_stamp-ros::Duration(0.1) );
++    nao::addBaseFootprint( tf2_buffer_, tf_transforms_, odom_stamp-ros::Duration(0.2) );
+   }
+ 
+   // If nobody uses that buffer, do not fill it next time
+diff -uarN naoqi_driver/src/converters/odom.cpp naoqi_driver_dvlab/src/converters/odom.cpp
+--- naoqi_driver/src/converters/odom.cpp	2021-02-13 13:51:20.428313943 +0100
++++ naoqi_driver_dvlab/src/converters/odom.cpp	2021-02-13 14:02:51.812022858 +0100
+@@ -38,8 +38,14 @@
+ OdomConverter::OdomConverter( const std::string& name, const float& frequency, const qi::SessionPtr& session ):
+   BaseConverter( name, frequency, session ),
+   p_motion_( session->service("ALMotion") )
+-  
+ {
++  use_sensor = true;
++
++  std::vector<float> al_odometry_data = p_motion_.call<std::vector<float> >( "getRobotPosition", use_sensor );
++  
++  startX = al_odometry_data[0];
++  startY = al_odometry_data[1];
++  startWZ = al_odometry_data[2];
+ }
+ 
+ void OdomConverter::registerCallback( message_actions::MessageAction action, Callback_t cb )
+@@ -49,21 +55,18 @@
+ 
+ void OdomConverter::callAll( const std::vector<message_actions::MessageAction>& actions )
+ {
+-  
+-  int FRAME_WORLD = 1;
+-  bool use_sensor = true;
+   // documentation of getPosition available here: http://doc.aldebaran.com/2-1/naoqi/motion/control-cartesian.html
+-  std::vector<float> al_odometry_data = p_motion_.call<std::vector<float> >( "getPosition", "Torso", FRAME_WORLD, use_sensor );
++  std::vector<float> al_odometry_data = p_motion_.call<std::vector<float> >( "getRobotPosition", use_sensor );
+   
+   const ros::Time& odom_stamp = ros::Time::now();
+   std::vector<float> al_speed_data = p_motion_.call<std::vector<float> >( "getRobotVelocity" );
+   
+-  const float& odomX  =  al_odometry_data[0];
+-  const float& odomY  =  al_odometry_data[1];
+-  const float& odomZ  =  al_odometry_data[2];
+-  const float& odomWX =  al_odometry_data[3];
+-  const float& odomWY =  al_odometry_data[4];
+-  const float& odomWZ =  al_odometry_data[5];
++  const float& odomX  =  (al_odometry_data[0] - startX) * std::cos(startWZ) + (al_odometry_data[1] - startY) * std::sin(startWZ);
++  const float& odomY  =  (al_odometry_data[1] - startY) * std::cos(startWZ) - (al_odometry_data[0] - startX) * std::sin(startWZ);
++  const float& odomZ  =  0.0f;
++  const float& odomWX =  0.0f;
++  const float& odomWY =  0.0f;
++  const float& odomWZ =  al_odometry_data[2] - startWZ;
+   
+   const float& dX = al_speed_data[0];
+   const float& dY = al_speed_data[1];
+@@ -76,7 +79,7 @@
+ 
+   static nav_msgs::Odometry msg_odom;
+   msg_odom.header.frame_id = "odom";
+-  msg_odom.child_frame_id = "base_link";
++  msg_odom.child_frame_id = "base_footprint";
+   msg_odom.header.stamp = odom_stamp;
+ 
+   msg_odom.pose.pose.orientation = odom_quat;
+@@ -92,6 +95,16 @@
+   msg_odom.twist.twist.angular.y = 0;
+   msg_odom.twist.twist.angular.z = dWZ;
+ 
++  // add covariance for uncertenty
++
++  msg_odom.twist.covariance[0] = 0.01f;
++  msg_odom.twist.covariance[7] = 0.01f;
++  msg_odom.twist.covariance[14] = 0.0f;
++  
++  msg_odom.twist.covariance[21] = 0.0f;
++  msg_odom.twist.covariance[28] = 0.0f;
++  msg_odom.twist.covariance[35] = 0.01f;
++
+   for_each( message_actions::MessageAction action, actions )
+   {
+     callbacks_[action](msg_odom);
+diff -uarN naoqi_driver/src/converters/odom.hpp naoqi_driver_dvlab/src/converters/odom.hpp
+--- naoqi_driver/src/converters/odom.hpp	2021-02-13 13:51:20.428313943 +0100
++++ naoqi_driver_dvlab/src/converters/odom.hpp	2021-02-13 14:02:51.812022858 +0100
+@@ -55,6 +55,11 @@
+ 
+   std::map<message_actions::MessageAction, Callback_t> callbacks_;
+   nav_msgs::Odometry msg_;
++  
++  float startX;
++  float startY;
++  float startWZ;
++  bool use_sensor;
+ }; // class
+ 
+ } //publisher
