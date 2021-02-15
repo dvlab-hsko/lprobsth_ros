@@ -1,0 +1,24 @@
+diff -uarN imu_tools_old/imu_complementary_filter/src/complementary_filter_ros.cpp imu_tools/imu_complementary_filter/src/complementary_filter_ros.cpp
+--- imu_tools_old/imu_complementary_filter/src/complementary_filter_ros.cpp	2021-02-15 18:43:39.896342863 +0100
++++ imu_tools/imu_complementary_filter/src/complementary_filter_ros.cpp	2021-02-15 18:43:01.691379375 +0100
+@@ -238,6 +238,8 @@
+     imu_msg->angular_velocity.z -= filter_.getAngularVelocityBiasZ();
+   }
+ 
++  imu_msg->header.stamp = ros::Time::now();
++
+   imu_publisher_.publish(imu_msg);
+ 
+   if (publish_debug_topics_)
+diff -uarN imu_tools_old/imu_filter_madgwick/src/imu_filter_ros.cpp imu_tools/imu_filter_madgwick/src/imu_filter_ros.cpp
+--- imu_tools_old/imu_filter_madgwick/src/imu_filter_ros.cpp	2021-02-15 18:43:39.968344678 +0100
++++ imu_tools/imu_filter_madgwick/src/imu_filter_ros.cpp	2021-02-15 18:41:21.480846975 +0100
+@@ -322,6 +322,8 @@
+   boost::shared_ptr<ImuMsg> imu_msg =
+     boost::make_shared<ImuMsg>(*imu_msg_raw);
+ 
++  imu_msg->header.stamp = ros::Time::now();
++
+   imu_msg->orientation.w = q0;
+   imu_msg->orientation.x = q1;
+   imu_msg->orientation.y = q2;
