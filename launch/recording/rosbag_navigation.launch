@@ -1,4 +1,4 @@
 <launch>
 	<node pkg="rosbag" type="record" name="rosbag_record_cam"
-       args="record -o /home/odroid/.ros/rosbag /cmd_vel /camera/color/image_raw /camera/aligned_depth_to_color/image_raw /camera/color/camera_info /camera/imu /camera/imu_filtered /naoqi_driver/odom /tf /rtabmap_map/grid_map /odometry/filtered_local /rtabmap_map/localization_pose /tf_static /naoqi_driver/info /move_base/global_costmap/costmap /move_base/global_costmap/footprint /move_base/GlobalPlanner/plan /move_base/current_goal /move_base/GlobalPlanner/potential" />
+       args="record -o /home/odroid/.ros/rosbag /cmd_vel /camera/color/image_raw /camera/aligned_depth_to_color/image_raw /camera/aligned_depth_to_color/camera_info /camera/color/camera_info /camera/imu /camera/imu_filtered /naoqi_driver/odom /tf /rtabmap_map/grid_map /odometry/filtered_local /rtabmap_map/localization_pose /tf_static /naoqi_driver/info /move_base/global_costmap/costmap /move_base/global_costmap/footprint /move_base/GlobalPlanner/plan /move_base/current_goal /move_base/GlobalPlanner/potential" />
 </launch>
