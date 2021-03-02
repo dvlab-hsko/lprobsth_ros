@@ -1,7 +1,11 @@
 <launch>
   <param name="robot_description" command="cat $(find nao_description)/urdf/naoV50_generated_urdf/nao.urdf" />
 
-  <arg name="path" default="/mnt/volume/Backup/2021_02_22 - LP - Bachelor/rosbag/" />
+  <arg name="hostname" default="$(env HOSTNAME)" />
+
+  <arg name="path" if="$(eval arg('hostname') == 'rosvirtbox.local')" default="/home/lprobsth/rosbag/" />
+  <arg name="path" if="$(eval arg('hostname') == '')" default="/mnt/volume/Backup/2021_02_22 - LP - Bachelor/rosbag/" />
+
   <arg name="file" default="rosbag_2021-02-23-13-35-19.bag" />
 
   <node pkg="rosbag" type="play" name="player" output="screen" args="--clock '$(arg path)$(arg file)' -l"/>
