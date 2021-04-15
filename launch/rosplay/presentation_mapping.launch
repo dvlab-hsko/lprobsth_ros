@@ -2,13 +2,14 @@
   <param name="robot_description" command="cat $(find nao_description)/urdf/naoV50_generated_urdf/nao.urdf" />
 
   <arg name="hostname" default="$(env HOSTNAME)" />
+  <arg name="speed" default="1" />
 
   <arg name="path" if="$(eval arg('hostname') == 'rosvirtbox.local')" default="/home/lprobsth/rosbag/" />
   <arg name="path" if="$(eval arg('hostname') == '')" default="/mnt/volume/Backup/2021_02_22 - LP - Bachelor/rosbag/" />
 
   <arg name="file" default="rosbag_2021-02-25-11-35-22.bag" />
 
-  <node pkg="rosbag" type="play" name="player" output="screen" args="--clock '$(arg path)$(arg file)' -l"/>
+  <node pkg="rosbag" type="play" name="player" output="screen" args="--clock '$(arg path)$(arg file)' -l -r $(arg speed)"/>
 
   <node type="rviz" name="rviz" pkg="rviz" args="-d $(find lprobsth_ros)/rviz/mapping.rviz" />
 </launch>
